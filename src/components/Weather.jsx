@@ -1,6 +1,4 @@
 import React from 'react'
-import './Weather.css'
-import searchIcon from '../assets/search.png'
 import clear_icon from '../assets/clear.png'
 import cloud_icon from '../assets/cloud.png'
 import rain_icon from '../assets/rain.png'
@@ -68,27 +66,48 @@ const Weather = () => {
   }
   , [])
   return (
-    <div className='weather'>
-      <div className='search-bar'>
-        <input ref={inputRef} type="text" placeholder='Search' />
-        <img src={searchIcon} alt="" onClick={() => search(inputRef.current.value)}/>
+    <div className="place-self-center p-8 rounded-2xl bg-gradient-to-br from-indigo-600 via-purple-600 to-violet-700 flex flex-col items-center shadow-2xl backdrop-blur-sm border border-white/20">
+      <div className="flex items-center gap-3">
+        <input 
+          ref={inputRef} 
+          type="text" 
+          placeholder='Search city...' 
+          className="h-12 border-none outline-none rounded-full pl-6 text-base text-gray-700 bg-white/90 placeholder-gray-500 w-48 sm:w-64 shadow-inner"
+          onKeyDown={(e) => e.key === 'Enter' && search(inputRef.current.value)}
+        />
+        <button 
+          onClick={() => search(inputRef.current.value)}
+          className="w-12 h-12 flex items-center justify-center rounded-full bg-white/90 cursor-pointer hover:bg-white transition-all shadow-md hover:scale-105"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+          </svg>
+        </button>
       </div>
-      <img src={weatherData ? weatherData.icon : clear_icon} alt="" className='weather-icon' />
-      <p className='temperature'>{weatherData ? `${weatherData.temp}°C` : "Loading..."}</p>
-      <p className='location'>{weatherData ? `${weatherData.city}, ${weatherData.country}` : "Loading..."}</p>
-      <div className="weather-data">
-        <div className="col">
-          <img src={humidity_icon} alt="" />
+      <img 
+        src={weatherData ? weatherData.icon : clear_icon} 
+        alt="Weather" 
+        className="w-36 h-36 my-6 drop-shadow-2xl animate-pulse-slow"
+      />
+      <p className="text-white text-7xl font-light tracking-wide">
+        {weatherData ? `${weatherData.temp}°` : "..."}
+      </p>
+      <p className="text-white/90 text-3xl font-medium mt-2">
+        {weatherData ? `${weatherData.city}, ${weatherData.country}` : "Loading..."}
+      </p>
+      <div className="w-full mt-10 flex justify-between text-white gap-8">
+        <div className="flex items-center gap-3">
+          <img src={humidity_icon} alt="Humidity" className="w-6" />
           <div>
-            <p>{weatherData ? `${weatherData.humidity} %` : "--"}</p>
-            <span>Humidity</span>
+            <p className="text-xl font-semibold">{weatherData ? `${weatherData.humidity}%` : "--"}</p>
+            <span className="text-sm text-white/70">Humidity</span>
           </div>
         </div>
-        <div className="col">
-          <img src={wind_icon} alt="" />
+        <div className="flex items-center gap-3">
+          <img src={wind_icon} alt="Wind" className="w-6" />
           <div>
-            <p>{weatherData ? `${weatherData.windSpeed} Km/h` : "--"}</p>
-            <span>Wind Speed</span>
+            <p className="text-xl font-semibold">{weatherData ? `${weatherData.windSpeed} km/h` : "--"}</p>
+            <span className="text-sm text-white/70">Wind Speed</span>
           </div>
         </div>
       </div>
